@@ -15,5 +15,10 @@ class Article extends Model
         'image', 'is_published'
     ];
 
-    protected $casts = ['is_published' => 'boolean'];
+    // این بخش را جایگزین کنید:
+    protected $casts = [
+        'is_published' => 'boolean',
+        'excerpt_fa' => 'array',
+        'excerpt_en' => 'array',
+    ];
 }

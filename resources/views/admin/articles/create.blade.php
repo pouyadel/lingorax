@@ -4,42 +4,16 @@
 @section('page-title', 'افزودن مقاله جدید (فارسی / انگلیسی)')
 
 @push('styles')
-<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 <style>
-    .ql-toolbar { 
-        background: #0E1A2E !important; 
-        border: 1px solid rgba(255, 255, 255, 0.1) !important; 
-        border-radius: 0.75rem 0.75rem 0 0; 
-    }
-    .ql-container { 
-        background: #080F1D !important; 
-        border: 1px solid rgba(255, 255, 255, 0.1) !important; 
-        border-top: 0 !important;
-        border-radius: 0 0 0.75rem 0.75rem; 
-        color: #f8fafc; 
-        min-height: 280px; 
-        font-family: inherit; 
-    }
-    .ql-stroke { stroke: #94A3B8 !important; }
-    .ql-fill { fill: #94A3B8 !important; }
-    .ql-picker { color: #94A3B8 !important; }
-    .ql-picker-options { 
-        background-color: #0E1A2E !important; 
-        border: 1px solid rgba(255,255,255,0.1) !important; 
-    }
-    .ql-editor.ql-blank::before { color: #64748B !important; font-style: normal; }
-    .ql-editor iframe { 
-        width: 100% !important; 
-        aspect-ratio: 16 / 9; 
-        border-radius: 1rem; 
-        margin: 1rem 0; 
-        border: 1px solid rgba(212, 175, 55, 0.3); 
-    }
-    .ql-editor img {
-        border-radius: 1rem;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        margin: 1rem auto;
-    }
+    /* استایل‌های اختصاصی محیط ادیتور دست‌ساز شما */
+    .custom-editor-content { min-height: 250px; outline: none; }
+    .custom-editor-content h3 { font-size: 1.5rem; font-weight: bold; margin-bottom: 10px; color: #fbbf24; }
+    .custom-editor-content p { margin-bottom: 10px; line-height: 1.8; }
+    .custom-editor-content img { max-width: 100%; border-radius: 8px; margin: 10px 0; }
+    .custom-editor-content audio { width: 100%; margin: 10px 0; border-radius: 30px; }
+    .custom-editor-content iframe { width: 100%; height: 350px; border-radius: 12px; margin: 15px 0; border: none; }
+    .editor-btn { padding: 4px 10px; font-size: 0.75rem; border-radius: 6px; background: rgba(255,255,255,0.05); color: #fff; transition: 0.2s; }
+    .editor-btn:hover { background: rgba(255,255,255,0.15); color: #fbbf24; }
 </style>
 @endpush
 
@@ -49,135 +23,213 @@
 
     <div class="glass-card p-6 rounded-3xl border border-white/5 space-y-6">
         
-        <!-- عناوین -->
+        <!-- عناوین دوزبانه -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div class="space-y-2">
                 <label class="text-xs text-brand-slate font-bold">عنوان فارسی (FA)</label>
-                <input type="text" name="title_fa" required class="w-full bg-brand-dark border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-brand-gold" placeholder="مثال: روش‌های تقویت لیسنینگ" />
+                <input type="text" name="title_fa" required class="w-full bg-brand-dark border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-brand-gold">
             </div>
 
             <div class="space-y-2">
                 <label class="text-xs text-brand-slate font-bold">English Title (EN)</label>
-                <input type="text" name="title_en" dir="ltr" required class="w-full bg-brand-dark border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-brand-gold" placeholder="e.g. Listening Mastery Techniques" />
+                <input type="text" name="title_en" dir="ltr" required class="w-full bg-brand-dark border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-brand-gold">
             </div>
         </div>
 
-        <!-- تنظیمات و دسته‌بندی -->
+        <!-- دسته‌بندی و سطح -->
         <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 border-t border-white/5 pt-4">
             <div class="space-y-2">
-                <label class="text-xs text-brand-slate font-bold">دسته‌بندی (مهارت)</label>
-                <select name="category" class="w-full bg-brand-dark border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-brand-gold">
-                    <option value="listening">شنیداری (Listening)</option>
-                    <option value="grammar">گرامر (Grammar)</option>
-                    <option value="vocab">واژگان (Vocabulary)</option>
-                    <option value="reading">درک مطلب (Reading)</option>
-                    <option value="ielts">آیلتس و تافل (IELTS & TOEFL)</option>
+                <label class="text-xs text-brand-slate font-bold">دسته‌بندی</label>
+                <select name="category" class="w-full bg-brand-dark border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white">
+                    <option value="listening">شنیداری</option>
+                    <option value="grammar">گرامر</option>
+                    <option value="vocab">واژگان</option>
+                    <option value="reading">درک مطلب</option>
+                    <option value="ielts">آیلتس و تافل</option>
                 </select>
             </div>
 
             <div class="space-y-2">
                 <label class="text-xs text-brand-slate font-bold">سطح زبان</label>
-                <select name="level" class="w-full bg-brand-dark border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-brand-gold">
+                <select name="level" class="w-full bg-brand-dark border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white">
                     <option value="A1 - A2">A1 - A2</option>
-                    <option value="B1">B1</option>
                     <option value="B1 - B2">B1 - B2</option>
-                    <option value="B2 - C1">B2 - C1</option>
                     <option value="C1 - C2">C1 - C2</option>
                 </select>
             </div>
 
             <div class="space-y-2">
                 <label class="text-xs text-brand-slate font-bold">زمان مطالعه (دقیقه)</label>
-                <input type="number" name="read_time" value="5" min="1" class="w-full bg-brand-dark border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-brand-gold" />
+                <input type="number" name="read_time" value="5" min="1" class="w-full bg-brand-dark border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white">
             </div>
 
             <div class="space-y-2">
-                <label class="text-xs text-brand-slate font-bold">تصویر شاخص مقاله</label>
-                <input type="file" name="image" accept="image/*" class="w-full bg-brand-dark border border-white/10 rounded-xl p-2 text-xs text-brand-slate file:mr-2 file:py-1 file:px-2.5 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-brand-cardLight file:text-white" />
+                <label class="text-xs text-brand-slate font-bold">تصویر شاخص</label>
+                <input type="file" name="image" accept="image/*" class="w-full bg-brand-dark border border-white/10 rounded-xl p-2 text-xs text-brand-slate">
             </div>
         </div>
 
-        <!-- چکیده‌ها -->
+        <!-- چکیده دوزبانه (آرایه‌ای) -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 border-t border-white/5 pt-4">
-            <div class="space-y-2">
-                <label class="text-xs text-brand-slate font-bold">چکیده کوتاه (فارسی)</label>
-                <textarea name="excerpt_fa" rows="2" class="w-full bg-brand-dark border border-white/10 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-brand-gold"></textarea>
+            <div class="space-y-2" id="excerpt-fa-container">
+                <label class="text-xs text-brand-slate font-bold flex justify-between">
+                    <span>چکیده فارسی (لیست)</span>
+                    <button type="button" onclick="addExcerpt('fa')" class="text-brand-gold hover:text-white">+</button>
+                </label>
+                <input type="text" name="excerpt_fa[]" class="w-full bg-brand-dark border border-white/10 rounded-xl px-4 py-2 text-xs text-white mb-2" placeholder="مورد اول...">
             </div>
 
-            <div class="space-y-2">
-                <label class="text-xs text-brand-slate font-bold">Short Excerpt (English)</label>
-                <textarea name="excerpt_en" dir="ltr" rows="2" class="w-full bg-brand-dark border border-white/10 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-brand-gold"></textarea>
+            <div class="space-y-2" id="excerpt-en-container">
+                <label class="text-xs text-brand-slate font-bold flex justify-between">
+                    <span>English Excerpt (List)</span>
+                    <button type="button" onclick="addExcerpt('en')" class="text-brand-gold hover:text-white">+</button>
+                </label>
+                <input type="text" name="excerpt_en[]" dir="ltr" class="w-full bg-brand-dark border border-white/10 rounded-xl px-4 py-2 text-xs text-white mb-2" placeholder="First item...">
             </div>
         </div>
 
-        <!-- ادیتورهای متن دوزبانه -->
-        <div class="space-y-6 border-t border-white/5 pt-4">
+        <!-- ادیتورهای دست‌ساز اختصاصی -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 border-t border-white/5 pt-4">
+            <!-- ادیتور فارسی -->
             <div class="space-y-2">
-                <div class="flex items-center justify-between">
-                    <label class="text-xs text-brand-gold font-bold flex items-center gap-2">
-                        <span class="w-2 h-2 rounded-full bg-brand-gold"></span>
-                        متن مقاله به فارسی
-                    </label>
-                    <span class="text-[11px] text-brand-slate/70">برای ویدیو: از آیکون ویدیو استفاده کرده و لینک Embed آپارات یا یوتیوب را وارد کنید.</span>
+                <label class="text-xs text-brand-gold font-bold">متن کامل (فارسی)</label>
+                <div class="border border-white/10 rounded-xl overflow-hidden bg-[#080F1D]">
+                    <div class="bg-[#0E1A2E] p-2 flex flex-wrap gap-2 border-b border-white/10">
+                        <button type="button" onclick="formatDoc('formatBlock', 'H3', 'editor_fa')" class="editor-btn">تیتر</button>
+                        <button type="button" onclick="formatDoc('formatBlock', 'P', 'editor_fa')" class="editor-btn">متن عادی</button>
+                        <button type="button" onclick="formatDoc('bold', null, 'editor_fa')" class="editor-btn font-bold">B</button>
+                        <div class="w-px h-5 bg-white/10 mx-1"></div>
+                        <button type="button" onclick="formatDoc('justifyRight', null, 'editor_fa')" class="editor-btn">راست‌چین</button>
+                        <button type="button" onclick="formatDoc('justifyLeft', null, 'editor_fa')" class="editor-btn">چپ‌چین</button>
+                        <div class="w-px h-5 bg-white/10 mx-1"></div>
+                        <button type="button" onclick="uploadCustomMedia('image', 'editor_fa')" class="editor-btn !text-blue-400">عکس</button>
+                        <button type="button" onclick="uploadCustomMedia('audio', 'editor_fa')" class="editor-btn !text-green-400">ویس</button>
+                        <button type="button" onclick="insertAparat('editor_fa')" class="editor-btn !text-red-400">آپارات</button>
+                    </div>
+                    <div id="editor_fa" contenteditable="true" class="custom-editor-content p-4 text-white text-sm" dir="rtl"></div>
                 </div>
-                <input type="hidden" name="content_fa" id="content_fa">
-                <div id="editor_fa"></div>
+                <input type="hidden" name="content_fa" id="content_fa_input">
             </div>
 
-            <div class="space-y-2 pt-4">
-                <div class="flex items-center justify-between">
-                    <label class="text-xs text-brand-gold font-bold flex items-center gap-2">
-                        <span class="w-2 h-2 rounded-full bg-brand-gold"></span>
-                        Full Article Content (English)
-                    </label>
-                    <span class="text-[11px] text-brand-slate/70">For video embeds, insert YouTube or Aparat embed links.</span>
+            <!-- ادیتور انگلیسی -->
+            <div class="space-y-2">
+                <label class="text-xs text-brand-gold font-bold">Full Content (English)</label>
+                <div class="border border-white/10 rounded-xl overflow-hidden bg-[#080F1D]">
+                    <div class="bg-[#0E1A2E] p-2 flex flex-wrap gap-2 border-b border-white/10" dir="ltr">
+                        <button type="button" onclick="formatDoc('formatBlock', 'H3', 'editor_en')" class="editor-btn">Heading</button>
+                        <button type="button" onclick="formatDoc('formatBlock', 'P', 'editor_en')" class="editor-btn">Normal</button>
+                        <button type="button" onclick="formatDoc('bold', null, 'editor_en')" class="editor-btn font-bold">B</button>
+                        <div class="w-px h-5 bg-white/10 mx-1"></div>
+                        <button type="button" onclick="formatDoc('justifyLeft', null, 'editor_en')" class="editor-btn">Left</button>
+                        <button type="button" onclick="formatDoc('justifyRight', null, 'editor_en')" class="editor-btn">Right</button>
+                        <div class="w-px h-5 bg-white/10 mx-1"></div>
+                        <button type="button" onclick="uploadCustomMedia('image', 'editor_en')" class="editor-btn !text-blue-400">Image</button>
+                        <button type="button" onclick="uploadCustomMedia('audio', 'editor_en')" class="editor-btn !text-green-400">Audio</button>
+                        <button type="button" onclick="insertAparat('editor_en')" class="editor-btn !text-red-400">Aparat</button>
+                    </div>
+                    <div id="editor_en" contenteditable="true" class="custom-editor-content p-4 text-white text-sm" dir="ltr"></div>
                 </div>
-                <input type="hidden" name="content_en" id="content_en">
-                <div id="editor_en" dir="ltr"></div>
+                <input type="hidden" name="content_en" id="content_en_input">
             </div>
         </div>
 
         <div class="flex items-center gap-2 pt-2">
             <input type="checkbox" name="is_published" id="is_published" value="1" checked class="rounded border-white/10 text-brand-gold focus:ring-brand-gold">
-            <label for="is_published" class="text-xs font-bold text-white cursor-pointer">انتشار بلافاصله در وب‌سایت</label>
+            <label for="is_published" class="text-xs font-bold text-white cursor-pointer">انتشار این مقاله</label>
         </div>
     </div>
 
-    <button type="submit" class="bg-gradient-to-r from-brand-gold to-brand-goldHover text-brand-darkest font-black px-8 py-3 rounded-xl text-xs shadow-glow-gold hover:scale-105 active:scale-95 transition-all">
-        ذخیره و انتشار مقاله
+    <button type="submit" class="bg-gradient-to-r from-brand-gold to-brand-goldHover text-brand-darkest font-black px-8 py-3 rounded-xl text-xs shadow-glow-gold hover:scale-105 transition-all">
+        ذخیره و انتشار
     </button>
 </form>
 @endsection
 
 @push('scripts')
-<script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
 <script>
-    const toolbarOptions = [
-        [{ 'header': [2, 3, 4, false] }],
-        ['bold', 'italic', 'underline', 'strike'],
-        [{ 'color': ['#D4AF37', '#F2D06B', '#f8fafc', '#94A3B8', '#EF4444', '#10B981'] }, { 'background': [] }],
-        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-        [{ 'align': [] }, { 'direction': 'rtl' }],
-        ['blockquote', 'code-block'],
-        ['link', 'image', 'video'],
-        ['clean']
-    ];
+    // اسکریپت افزودن چکیده آرایه ای
+    function addExcerpt(lang) {
+        const container = document.getElementById('excerpt-' + lang + '-container');
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.name = lang === 'fa' ? 'excerpt_fa[]' : 'excerpt_en[]';
+        input.dir = lang === 'fa' ? 'rtl' : 'ltr';
+        input.className = 'w-full bg-brand-dark border border-white/10 rounded-xl px-4 py-2 text-xs text-white mb-2 mt-2';
+        container.appendChild(input);
+    }
 
-    const quillFa = new Quill('#editor_fa', {
-        theme: 'snow',
-        placeholder: 'متن مقاله را اینجا بنویسید... برای افزودن ویدیو کافیست لینک مستقیم Embed آپارات یا یوتیوب را در بخش ویدیو قرار دهید.',
-        modules: { toolbar: toolbarOptions }
-    });
+    // توابع ادیتور اختصاصی
+    function formatDoc(cmd, value = null, editorId) {
+        document.getElementById(editorId).focus();
+        document.execCommand(cmd, false, value);
+    }
 
-    const quillEn = new Quill('#editor_en', {
-        theme: 'snow',
-        placeholder: 'Write the English article content here...',
-        modules: { toolbar: toolbarOptions }
-    });
+    function insertAparat(editorId) {
+        document.getElementById(editorId).focus();
+        let url = prompt('لینک آپارات را وارد کنید (مثال: https://www.aparat.com/v/XYZ):');
+        if (!url) return;
+        
+        let hash = url.match(/v\/([a-zA-Z0-9]+)/)?.[1] || url.match(/videohash\/([a-zA-Z0-9]+)/)?.[1] || url.trim();
+        
+        if (hash) {
+            let html = `<br><iframe src="https://www.aparat.com/video/video/embed/videohash/${hash}/vt/frame" allowFullScreen="true"></iframe><br><p>&#8203;</p>`;
+            document.execCommand('insertHTML', false, html);
+        }
+    }
 
+    function uploadCustomMedia(type, editorId) {
+        const editor = document.getElementById(editorId);
+        editor.focus();
+        
+        // ذخیره موقعیت نشانگر
+        let selection = window.getSelection();
+        let range = selection.rangeCount > 0 ? selection.getRangeAt(0) : null;
+
+        let input = document.createElement('input');
+        input.type = 'file';
+        input.accept = type === 'image' ? 'image/*' : 'audio/*';
+        
+        input.onchange = function() {
+            let file = this.files[0];
+            let formData = new FormData();
+            formData.append('file', file);
+
+            // بازگرداندن نشانگر و درج متن لودینگ
+            if (range) { selection.removeAllRanges(); selection.addRange(range); }
+            document.execCommand('insertHTML', false, `<span id="loading-media" style="color:#fbbf24;">[در حال آپلود...]</span>`);
+
+            fetch('{{ route("admin.editor.upload") }}', {
+                method: 'POST',
+                headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                // حذف متن لودینگ
+                editor.innerHTML = editor.innerHTML.replace('<span id="loading-media" style="color:#fbbf24;">[در حال آپلود...]</span>', '');
+                
+                if (data.location) {
+                    let html = type === 'image' 
+                        ? `<br><img src="${data.location}" /><br><p>&#8203;</p>` 
+                        : `<br><audio controls src="${data.location}" dir="ltr"></audio><br><p>&#8203;</p>`;
+                    
+                    editor.focus();
+                    document.execCommand('insertHTML', false, html);
+                } else {
+                    alert('خطا در آپلود');
+                }
+            }).catch(() => {
+                editor.innerHTML = editor.innerHTML.replace('<span id="loading-media" style="color:#fbbf24;">[در حال آپلود...]</span>', '');
+                alert('خطا در ارتباط با سرور');
+            });
+        };
+        input.click();
+    }
+
+    // کپی کردن محتوای ادیتورها به اینپوت‌های مخفی هنگام ارسال فرم
     document.getElementById('articleForm').onsubmit = function() {
-        document.getElementById('content_fa').value = quillFa.root.innerHTML;
-        document.getElementById('content_en').value = quillEn.root.innerHTML;
+        document.getElementById('content_fa_input').value = document.getElementById('editor_fa').innerHTML;
+        document.getElementById('content_en_input').value = document.getElementById('editor_en').innerHTML;
     };
 </script>
 @endpush

@@ -29,8 +29,7 @@ class ArticleController extends Controller
             'level' => 'required|string',
             'category' => 'required|string',
             'read_time' => 'required|numeric|min:1',
-            'excerpt_fa' => 'nullable|string',
-            'excerpt_en' => 'nullable|string',
+            'excerpt_fa.*' => 'nullable|string', // بررسی می‌کند که آیتم‌های داخل آرایه متن باشند            'excerpt_en' => 'nullable|string',
             'content_fa' => 'required|string',
             'content_en' => 'required|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
@@ -60,8 +59,10 @@ class ArticleController extends Controller
             'level' => 'required|string',
             'category' => 'required|string',
             'read_time' => 'required|numeric|min:1',
-            'excerpt_fa' => 'nullable|string',
-            'excerpt_en' => 'nullable|string',
+            'excerpt_fa' => 'nullable|array',
+            'excerpt_fa.*' => 'nullable|string',
+            'excerpt_en' => 'nullable|array',
+            'excerpt_en.*' => 'nullable|string',
             'content_fa' => 'required|string',
             'content_en' => 'required|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
@@ -87,5 +88,21 @@ class ArticleController extends Controller
         }
         $article->delete();
         return redirect()->route('admin.articles.index')->with('success', 'مقاله با موفقیت حذف شد.');
+    }
+
+    public function uploadEditorMedia(\Illuminate\Http\Request $request)
+    {
+    $request->validate([
+        'file' => 'required|file|mimes:jpg,jpeg,png,webp,gif,mp3,wav,ogg,m4a|max:20480'
+    ]);
+
+    if ($request->hasFile('file')) {
+        $path = $request->file('file')->store('articles_media', 'public');
+        return response()->json([
+            'location' => asset('storage/' . $path)
+        ]);
+    }
+
+    return response()->json(['error' => 'خطا در آپلود فایل'], 500);
     }
 }

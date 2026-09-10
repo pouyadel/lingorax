@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\ArticleController as AdminArticleController;
 use App\Http\Controllers\Admin\QuizController as AdminQuizController;
+use App\Http\Controllers\Admin\ArticleController;
 
 // صفحات فرانت‌اند
 Route::get('/', [FrontendController::class, 'home'])->name('home');
@@ -23,3 +24,5 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('articles', AdminArticleController::class);
     Route::resource('quizzes', AdminQuizController::class);
 });
+
+Route::post('/admin/editor/upload', [ArticleController::class, 'uploadEditorMedia'])->name('admin.editor.upload');

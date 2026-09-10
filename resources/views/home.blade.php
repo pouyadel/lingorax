@@ -203,8 +203,8 @@
                 <span x-show="lang === 'en'">{{ $art->title_en }}</span>
               </h3>
               <p class="text-brand-slate text-xs leading-relaxed line-clamp-2">
-                <span x-show="lang === 'fa'">{{ $art->excerpt_fa }}</span>
-                <span x-show="lang === 'en'">{{ $art->excerpt_en }}</span>
+                <span x-show="lang === 'fa'">{{ is_array($art->excerpt_fa) ? implode(' - ', array_filter($art->excerpt_fa)) : $art->excerpt_fa }}</span>
+                <span x-show="lang === 'en'">{{ is_array($art->excerpt_en) ? implode(' - ', array_filter($art->excerpt_en)) : $art->excerpt_en }}</span>
               </p>
             </div>
           </div>

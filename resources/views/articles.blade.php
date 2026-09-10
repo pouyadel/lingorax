@@ -19,8 +19,8 @@
         'en' => $art->title_en,
       ],
       'desc' => [
-        'fa' => $art->excerpt_fa ?: mb_substr(strip_tags($art->content_fa), 0, 120) . '...',
-        'en' => $art->excerpt_en ?: mb_substr(strip_tags($art->content_en), 0, 120) . '...',
+        'fa' => is_array($art->excerpt_fa) ? implode(' - ', array_filter($art->excerpt_fa)) : ($art->excerpt_fa ?: mb_substr(strip_tags($art->content_fa), 0, 120) . '...'),
+        'en' => is_array($art->excerpt_en) ? implode(' - ', array_filter($art->excerpt_en)) : ($art->excerpt_en ?: mb_substr(strip_tags($art->content_en), 0, 120) . '...'),
       ],
       'level' => $art->level,
       'category' => $art->category,
@@ -31,7 +31,6 @@
     ];
   })->values();
 @endphp
-
 @section('content')
 <div x-data="articlesArchive()" class="space-y-10 sm:space-y-14 py-8 sm:py-12">
   
