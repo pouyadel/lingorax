@@ -1,0 +1,67 @@
+@font-face {
+  font-family: "Modam VF";
+  src: url("../fonts/ModamVF.woff") format("woff"),
+       url("../fonts/ModamVF.ttf") format("truetype");
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Modam Static";
+  src: url("../fonts/staticfonts/ModamWeb-Regular.woff") format("woff");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Modam Static";
+  src: url("../fonts/staticfonts/ModamWeb-Bold.woff") format("woff");
+  font-weight: 700;
+  font-display: swap;
+}
+
+body {
+  background-color: #080f1d;
+  color: #f8fafc;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body[dir="rtl"] {
+  font-family: "Modam VF", "Modam Static", system-ui, sans-serif;
+}
+body[dir="ltr"] {
+  font-family: "Plus Jakarta Sans", "Outfit", system-ui, sans-serif;
+  letter-spacing: -0.01em;
+}
+
+.bg-radial-glow {
+  background-image: 
+    radial-gradient(circle at 15% 15%, rgba(212, 175, 55, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 85% 60%, rgba(56, 189, 248, 0.05) 0%, transparent 45%),
+    radial-gradient(circle at 50% 90%, rgba(212, 175, 55, 0.06) 0%, transparent 50%);
+}
+
+.text-gold-gradient {
+  background: linear-gradient(135deg, #FFF0B8 0%, #D4AF37 50%, #AA820A 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.glass-card {
+  background: linear-gradient(135deg, rgba(27, 42, 74, 0.55) 0%, rgba(15, 30, 54, 0.75) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-card-hover {
+  position: relative;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+.glass-card-hover:hover {
+  z-index: 10;
+  border-color: rgba(212, 175, 55, 0.45);
+  background: linear-gradient(135deg, rgba(32, 50, 86, 0.75) 0%, rgba(18, 34, 60, 0.85) 100%);
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.6), 0 0 25px 0 rgba(212, 175, 55, 0.15);
+}
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
