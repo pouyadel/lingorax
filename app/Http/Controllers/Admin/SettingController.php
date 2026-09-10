@@ -10,7 +10,7 @@ class SettingController extends Controller
 {
     public function index()
     {
-        $settings = Setting::all()->pluck('value', 'key');
+        $settings = Setting::all()->pluck('value', 'key')->toArray();
         return view('admin.settings.index', compact('settings'));
     }
 
@@ -22,6 +22,6 @@ class SettingController extends Controller
             Setting::set($key, $value);
         }
 
-        return redirect()->back()->with('success', 'متون و تنظیمات با موفقیت ذخیره شدند.');
+        return redirect()->back()->with('success', 'تمامی تغییرات و متون با موفقیت در دیتابیس ذخیره شدند.');
     }
 }

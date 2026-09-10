@@ -364,10 +364,22 @@ function quizApp() {
       }
     },
     t: {
-      pageBadge: { fa: 'ارزیابی هوشمند و هدفمند', en: 'Smart & Targeted Assessment' },
-      pageTitle1: { fa: 'بانک آزمون‌ها و', en: 'Online Quiz Bank &' },
-      pageTitle2: { fa: 'کوئیزهای آنلاین', en: 'Language Assessment' },
-      pageDesc: { fa: 'آزمون مورد نظر خود را انتخاب کنید و سطح دانش زبانی خود را با سؤالات استاندارد بسنجید.', en: 'Select a quiz below and evaluate your language proficiency with standardized questions.' },
+      pageBadge: { 
+        fa: "{{ $settings['quizzes_badge_fa'] ?? 'ارزیابی هوشمند و هدفمند' }}", 
+        en: "{{ $settings['quizzes_badge_en'] ?? 'Smart & Targeted Assessment' }}" 
+      },
+      pageTitle1: { 
+        fa: "{{ $settings['quizzes_title1_fa'] ?? 'بانک آزمون‌ها و' }}", 
+        en: "{{ $settings['quizzes_title1_en'] ?? 'Online Quiz Bank &' }}" 
+      },
+      pageTitle2: { 
+        fa: "{{ $settings['quizzes_title2_fa'] ?? 'کوئیزهای آنلاین' }}", 
+        en: "{{ $settings['quizzes_title2_en'] ?? 'Language Assessment' }}" 
+      },
+      pageDesc: { 
+        fa: "{{ $settings['quizzes_desc_fa'] ?? 'آزمون مورد نظر خود را انتخاب کنید و سطح دانش زبانی خود را با سؤالات استاندارد بسنجید.' }}", 
+        en: "{{ $settings['quizzes_desc_en'] ?? 'Select a quiz below and evaluate your language proficiency with standardized questions.' }}" 
+      },
       searchPlaceholder: { fa: 'جستجو در عنوان یا توضیحات آزمون...', en: 'Search quizzes by title or keyword...' },
       catAll: { fa: 'همه موضوعات', en: 'All Topics' },
       catGrammar: { fa: 'گرامر', en: 'Grammar' },

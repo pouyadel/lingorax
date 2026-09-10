@@ -103,31 +103,59 @@
         { id: 3, value: { fa: '8.5', en: '8.5' }, label: { fa: 'نمره آیلتس آکادمیک', en: 'IELTS Academic Band' } },
         { id: 4, value: { fa: '+50', en: '+50' }, label: { fa: 'مقاله تخصصی', en: 'Published Articles' } },
       ],
+      stats: [
+        { 
+          id: 1, 
+          value: { fa: "{{ $settings['about_stat1_val'] ?? '+8' }}", en: "{{ $settings['about_stat1_val'] ?? '+8' }}" }, 
+          label: { fa: "{{ $settings['about_stat1_lbl_fa'] ?? 'سال سابقه تدریس' }}", en: "{{ $settings['about_stat1_lbl_en'] ?? 'Years Experience' }}" } 
+        },
+        { 
+          id: 2, 
+          value: { fa: "{{ $settings['about_stat2_val'] ?? '+1000' }}", en: "{{ $settings['about_stat2_val'] ?? '+1000' }}" }, 
+          label: { fa: "{{ $settings['about_stat2_lbl_fa'] ?? 'زبان‌آموز موفق' }}", en: "{{ $settings['about_stat2_lbl_en'] ?? 'Successful Students' }}" } 
+        },
+        { 
+          id: 3, 
+          value: { fa: "{{ $settings['about_stat3_val'] ?? '8.5' }}", en: "{{ $settings['about_stat3_val'] ?? '8.5' }}" }, 
+          label: { fa: "{{ $settings['about_stat3_lbl_fa'] ?? 'نمره آیلتس آکادمیک' }}", en: "{{ $settings['about_stat3_lbl_en'] ?? 'IELTS Academic Band' }}" } 
+        },
+        { 
+          id: 4, 
+          value: { fa: "{{ $settings['about_stat4_val'] ?? '+50' }}", en: "{{ $settings['about_stat4_val'] ?? '+50' }}" }, 
+          label: { fa: "{{ $settings['about_stat4_lbl_fa'] ?? 'مقاله تخصصی' }}", en: "{{ $settings['about_stat4_lbl_en'] ?? 'Published Articles' }}" } 
+        },
+      ],
       t: {
-        teacherBadge: { fa: 'مؤلف و مدرس زبان', en: 'AUTHOR & INSTRUCTOR' },
+        teacherBadge: { 
+          fa: "{{ $settings['about_teacher_badge_fa'] ?? 'مؤلف و مدرس زبان' }}", 
+          en: "{{ $settings['about_teacher_badge_en'] ?? 'AUTHOR & INSTRUCTOR' }}" 
+        },
         teacherName: { 
-          fa: "{{ $settings['teacher_name_fa'] ?? 'یاشیل رزمیان‌زاده' }}", 
-          en: "{{ $settings['teacher_name_en'] ?? 'Yashil Razmiyanzadeh' }}" 
+          fa: "{{ $settings['about_teacher_name_fa'] ?? 'یاشیل رزمیان‌زاده' }}", 
+          en: "{{ $settings['about_teacher_name_en'] ?? 'Yashil Razmiyanzadeh' }}" 
         },
         teacherRole: { 
-          fa: "{{ $settings['teacher_role_fa'] ?? 'مدرس تخصصی آیلتس، تافل و زبان عمومی' }}", 
-          en: "{{ $settings['teacher_role_en'] ?? 'Specialized IELTS, TOEFL & General English Instructor' }}" 
+          fa: "{{ $settings['about_teacher_role_fa'] ?? 'مدرس تخصصی آیلتس، تافل و زبان عمومی' }}", 
+          en: "{{ $settings['about_teacher_role_en'] ?? 'Specialized IELTS, TOEFL & General English Instructor' }}" 
         },
         teacherBioFull: { 
-          fa: "{{ $settings['teacher_bio_full_fa'] ?? 'من یاشیل رزمیان‌زاده هستم. سال‌هاست که مسیر تدریس زبان انگلیسی را با هدف ایجاد تغییرات بنیادین در شیوه یادگیری زبان‌آموزان انتخاب کرده‌ام. پلتفرم LINGORAX نتیجه تلاش من برای ارائه منابع استاندارد، مقالات تحلیلی عمیق و کوئیزهای هدفمند است تا مسیر رسیدن به نمرات برتر بین‌المللی را برای شما هموارتر کنم.' }}", 
-          en: "{{ $settings['teacher_bio_full_en'] ?? 'I am Yashil Razmiyanzadeh. For years, I have dedicated myself to transforming how students learn English. LINGORAX is the culmination of my effort to provide standard resources, in-depth analytical articles, and targeted quizzes to pave your way toward achieving top international scores.' }}" 
+          fa: "{{ $settings['about_teacher_bio_fa'] ?? 'من یاشیل رزمیان‌زاده هستم. سال‌هاست که مسیر تدریس زبان انگلیسی را با هدف ایجاد تغییرات بنیادین در شیوه یادگیری زبان‌آموزان انتخاب کرده‌ام.' }}", 
+          en: "{{ $settings['about_teacher_bio_en'] ?? 'I am Yashil Razmiyanzadeh. For years, I have dedicated myself to transforming how students learn English.' }}" 
         },
         downloadCV: { fa: 'دانلود رزومه کامل (PDF)', en: 'Download Full CV (PDF)' },
         contactMe: { fa: 'ارتباط مستقیم', en: 'Direct Contact' },
         
-        philosophyTitle: { fa: 'فلسفه و رویکرد آموزشی من', en: 'My Teaching Philosophy' },
+        philosophyTitle: { 
+          fa: "{{ $settings['about_philosophy_title_fa'] ?? 'فلسفه و رویکرد آموزشی من' }}", 
+          en: "{{ $settings['about_philosophy_title_en'] ?? 'My Teaching Philosophy' }}" 
+        },
         philosophyP1: { 
-          fa: 'یادگیری زبان انگلیسی نباید به حفظ کردن طوطی‌وار گرامر و لغت محدود شود. در کلاس‌ها و مقالات من، زبان به عنوان یک ابزار ارتباطی زنده بررسی می‌شود. هدف من این است که زبان‌آموزان نه تنها برای آزمون‌های سختی چون آیلتس آماده شوند، بلکه بتوانند در محیط‌های آکادمیک و کاری بین‌المللی با اعتماد به نفس کامل صحبت کنند.', 
-          en: 'Learning English should not be limited to rote memorization of grammar and vocabulary. In my classes and articles, language is treated as a living communication tool. My goal is to prepare students not just for rigorous exams like IELTS, but to empower them to speak with absolute confidence in international academic and professional environments.' 
+          fa: "{{ $settings['about_philosophy_p1_fa'] ?? 'یادگیری زبان انگلیسی نباید به حفظ کردن طوطی‌وار گرامر و لغت محدود شود. در کلاس‌ها و مقالات من، زبان به عنوان یک ابزار ارتباطی زنده بررسی می‌شود.' }}", 
+          en: "{{ $settings['about_philosophy_p1_en'] ?? 'Learning English should not be limited to rote memorization of grammar and vocabulary. In my classes and articles, language is treated as a living communication tool.' }}" 
         },
         philosophyP2: { 
-          fa: 'ما در LINGORAX با تمرکز بر ارزیابی‌های مستمر (از طریق کوئیزهای آنلاین) و یادگیری خودآموز (از طریق مقالات طبقه‌بندی شده)، تلاش می‌کنیم فرآیند آموزش را شخصی‌سازی کرده و بالاترین بازدهی را برای هر فرد به ارمغان بیاوریم.', 
-          en: 'At LINGORAX, by focusing on continuous assessment (via online quizzes) and self-study (via categorized articles), we strive to personalize the learning process and bring about the highest efficiency for each individual.' 
+          fa: "{{ $settings['about_philosophy_p2_fa'] ?? 'ما در LINGORAX با تمرکز بر ارزیابی‌های مستمر و یادگیری خودآموز، تلاش می‌کنیم فرآیند آموزش را شخصی‌سازی کرده و بالاترین بازدهی را برای هر فرد به ارمغان بیاوریم.' }}", 
+          en: "{{ $settings['about_philosophy_p2_en'] ?? 'At LINGORAX, by focusing on continuous assessment and self-study, we strive to personalize the learning process and bring about the highest efficiency for each individual.' }}" 
         }
       }
     };

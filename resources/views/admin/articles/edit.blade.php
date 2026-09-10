@@ -6,11 +6,14 @@
 @push('styles')
 <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 <style>
-    .ql-toolbar { background: #0E1A2E; border-color: rgba(255,255,255,0.1) !important; border-radius: 0.75rem 0.75rem 0 0; }
-    .ql-container { background: #080F1D; border-color: rgba(255,255,255,0.1) !important; border-radius: 0 0 0.75rem 0.75rem; color: #fff; min-height: 220px; font-family: inherit; }
+    .ql-toolbar { background: #0E1A2E !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; border-radius: 0.75rem 0.75rem 0 0; }
+    .ql-container { background: #080F1D !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; border-top: 0 !important; border-radius: 0 0 0.75rem 0.75rem; color: #f8fafc; min-height: 280px; font-family: inherit; }
     .ql-stroke { stroke: #94A3B8 !important; }
     .ql-fill { fill: #94A3B8 !important; }
-    .ql-picker-label { color: #94A3B8 !important; }
+    .ql-picker { color: #94A3B8 !important; }
+    .ql-picker-options { background-color: #0E1A2E !important; border: 1px solid rgba(255,255,255,0.1) !important; }
+    .ql-editor iframe { width: 100% !important; aspect-ratio: 16 / 9; border-radius: 1rem; margin: 1rem 0; border: 1px solid rgba(212, 175, 55, 0.3); }
+    .ql-editor img { border-radius: 1rem; border: 1px solid rgba(255, 255, 255, 0.1); margin: 1rem auto; }
 </style>
 @endpush
 
@@ -49,13 +52,15 @@
                 <label class="text-xs text-brand-slate font-bold">سطح زبان</label>
                 <select name="level" class="w-full bg-brand-dark border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-brand-gold">
                     <option value="A1 - A2" {{ $article->level === 'A1 - A2' ? 'selected' : '' }}>A1 - A2</option>
+                    <option value="B1" {{ $article->level === 'B1' ? 'selected' : '' }}>B1</option>
                     <option value="B1 - B2" {{ $article->level === 'B1 - B2' ? 'selected' : '' }}>B1 - B2</option>
+                    <option value="B2 - C1" {{ $article->level === 'B2 - C1' ? 'selected' : '' }}>B2 - C1</option>
                     <option value="C1 - C2" {{ $article->level === 'C1 - C2' ? 'selected' : '' }}>C1 - C2</option>
                 </select>
             </div>
 
             <div class="space-y-2">
-                <label class="text-xs text-brand-slate font-bold">مدت زمان مطالعه (دقیقه)</label>
+                <label class="text-xs text-brand-slate font-bold">زمان مطالعه (دقیقه)</label>
                 <input type="number" name="read_time" value="{{ $article->read_time }}" min="1" class="w-full bg-brand-dark border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-brand-gold" />
             </div>
 
@@ -77,14 +82,14 @@
             </div>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 border-t border-white/5 pt-4">
+        <div class="space-y-6 border-t border-white/5 pt-4">
             <div class="space-y-2">
                 <label class="text-xs text-brand-gold font-bold">متن کامل مقاله (فارسی)</label>
                 <input type="hidden" name="content_fa" id="content_fa">
                 <div id="editor_fa">{!! $article->content_fa !!}</div>
             </div>
 
-            <div class="space-y-2">
+            <div class="space-y-2 pt-4">
                 <label class="text-xs text-brand-gold font-bold">Full Article Content (English)</label>
                 <input type="hidden" name="content_en" id="content_en">
                 <div id="editor_en" dir="ltr">{!! $article->content_en !!}</div>
@@ -107,10 +112,13 @@
 <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
 <script>
     const toolbarOptions = [
-        [{ 'header': [1, 2, 3, false] }],
+        [{ 'header': [2, 3, 4, false] }],
         ['bold', 'italic', 'underline', 'strike'],
+        [{ 'color': ['#D4AF37', '#F2D06B', '#f8fafc', '#94A3B8', '#EF4444', '#10B981'] }, { 'background': [] }],
         [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-        ['link', 'blockquote', 'code-block'],
+        [{ 'align': [] }, { 'direction': 'rtl' }],
+        ['blockquote', 'code-block'],
+        ['link', 'image', 'video'],
         ['clean']
     ];
 

@@ -475,10 +475,22 @@ function articlesArchive() {
       }
     },
     t: {
-      pageBadge: { fa: 'مرجع آموزشی و تحلیلی مقالات', en: 'Educational Article Archive' },
-      pageTitle1: { fa: 'بانک مقالات تخصصی و', en: 'Specialized English' },
-      pageTitle2: { fa: 'نکات تحلیلی زبان انگلیسی', en: 'Articles & Study Guides' },
-      pageDesc: { fa: 'دسته‌بندی مقالات بر اساس سطح زبان و مهارت‌های مورد نیاز، از مبتدی تا آمادگی آزمون‌های آیلتس و تافل.', en: 'Curated self-study articles, structural guides, and exam strategies categorized by skill and CEFR level.' },
+      pageBadge: { 
+        fa: "{{ $settings['articles_badge_fa'] ?? 'مرجع آموزشی و تحلیلی مقالات' }}", 
+        en: "{{ $settings['articles_badge_en'] ?? 'Educational Article Archive' }}" 
+      },
+      pageTitle1: { 
+        fa: "{{ $settings['articles_title1_fa'] ?? 'بانک مقالات تخصصی و' }}", 
+        en: "{{ $settings['articles_title1_en'] ?? 'Specialized English' }}" 
+      },
+      pageTitle2: { 
+        fa: "{{ $settings['articles_title2_fa'] ?? 'نکات تحلیلی زبان انگلیسی' }}", 
+        en: "{{ $settings['articles_title2_en'] ?? 'Articles & Study Guides' }}" 
+      },
+      pageDesc: { 
+        fa: "{{ $settings['articles_desc_fa'] ?? 'دسته‌بندی مقالات بر اساس سطح زبان و مهارت‌های مورد نیاز، از مبتدی تا آمادگی آزمون‌های آیلتس و تافل.' }}", 
+        en: "{{ $settings['articles_desc_en'] ?? 'Curated self-study articles, structural guides, and exam strategies categorized by skill and CEFR level.' }}" 
+      },
       searchPlaceholder: { fa: 'جستجو در عنوان یا متن مقاله...', en: 'Search articles by title or keyword...' },
       filterAll: { fa: 'همه سطوح', en: 'All Levels' },
       catAll: { fa: 'همه موضوعات', en: 'All Topics' },
@@ -496,7 +508,12 @@ function articlesArchive() {
       prevPage: { fa: 'قبلی', en: 'Previous' },
       nextPage: { fa: 'بعدی', en: 'Next' },
       pageWord: { fa: 'صفحه', en: 'Page' },
-
+      newsletterBoxTitle: { fa: 'عضویت در خبرنامه مقالات تخصصی', en: 'Subscribe for New Article Alerts' },
+      newsletterBoxDesc: { fa: 'به محض انتشار مقاله یا نکته آموزشی جدید، شما را با پیامک مطلع خواهیم کرد.', en: 'Get instant notifications whenever new study guides and tests are published.' },
+      newsletterBtn: { fa: 'عضویت سریع', en: 'Subscribe' },
+      newsletterPlaceholder: { fa: '۰۹۱۲...', en: '0912...' },
+      toastSuccess: { fa: 'شماره شما برای دریافت مقالات جدید ثبت شد!', en: 'Thank you! You will be notified of new articles.' },
+      toastInvalid: { fa: 'لطفاً شماره موبایل معتبر وارد کنید.', en: 'Please enter a valid mobile number.' }
     }
   }
 }

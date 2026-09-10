@@ -396,38 +396,59 @@ function homePage() {
     toastMsg: '',
     phoneInput: '',
     t: {
-      heroTitle1: { fa: 'آموزش و ارزیابی زبان،', en: 'English Learning & Assessment,' },
-      heroTitle2: { fa: 'کاربردی و هدفمند', en: 'Practical & Goal-Oriented' },
+      heroTitle1: { 
+        fa: "{{ $settings['home_title1_fa'] ?? 'آموزش و ارزیابی زبان،' }}", 
+        en: "{{ $settings['home_title1_en'] ?? 'English Learning & Assessment,' }}" 
+      },
+      heroTitle2: { 
+        fa: "{{ $settings['home_title2_fa'] ?? 'کاربردی و هدفمند' }}", 
+        en: "{{ $settings['home_title2_en'] ?? 'Practical & Goal-Oriented' }}" 
+      },
       newsletterBtn: { fa: 'عضویت در خبرنامه', en: 'Subscribe' },
       newsletterSub: { fa: 'دریافت پیامک هنگام انتشار کوئیزها و مقالات جدید', en: 'Get instant notifications when new quizzes and articles are published' },
       newsletterPlaceholder: { fa: '۰۹۱۲...', en: '0912...' },
       videoIntro: { fa: 'ویدیوی معرفی', en: 'Intro Video' },
       modalTitle: { fa: 'ویدئوی معرفی', en: 'Intro Video Overview' },
       
-      // Pillars
-      pillar1Title: { fa: 'سنجش هوشمند و تحلیلی', en: 'Smart Assessment' },
-      pillar1Desc: { fa: 'کوئیزهای استاندارد با محاسبه آنی نمره و ارائه پاسخ تشریحی برای هر سوال', en: 'Standardized quizzes with real-time scoring and comprehensive answer explanations.' },
-      pillar2Title: { fa: 'مقالات هدفمند و خودآموز', en: 'Self-Study Articles' },
-      pillar2Desc: { fa: 'مطالب آموزشی دسته‌بندی‌شده بر اساس سطوح زبانی استاندارد (A1 تا C2)', en: 'Curated articles categorized by international CEFR language levels (A1 to C2).' },
-      pillar3Title: { fa: 'دسترسی آزاد و سریع', en: 'Direct Access' },
-      pillar3Desc: { fa: 'استفاده مستقیم از آزمون‌ها و بانک لغات بدون موانع و فرآیندهای طولانی', en: 'Instant engagement with learning modules and tests with zero friction.' },
+      // سه ستون ارزش‌ها
+      pillar1Title: { 
+        fa: "{{ $settings['home_pillar1_title_fa'] ?? 'سنجش هوشمند و تحلیلی' }}", 
+        en: "{{ $settings['home_pillar1_title_en'] ?? 'Smart Assessment' }}" 
+      },
+      pillar1Desc: { 
+        fa: "{{ $settings['home_pillar1_desc_fa'] ?? 'کوئیزهای استاندارد با محاسبه آنی نمره و ارائه پاسخ تشریحی برای هر سوال' }}", 
+        en: "{{ $settings['home_pillar1_desc_en'] ?? 'Standardized quizzes with real-time scoring and comprehensive answer explanations.' }}" 
+      },
+      pillar2Title: { 
+        fa: "{{ $settings['home_pillar2_title_fa'] ?? 'مقالات هدفمند و خودآموز' }}", 
+        en: "{{ $settings['home_pillar2_title_en'] ?? 'Self-Study Articles' }}" 
+      },
+      pillar2Desc: { 
+        fa: "{{ $settings['home_pillar2_desc_fa'] ?? 'مطالب آموزشی دسته‌بندی‌شده بر اساس سطوح زبانی استاندارد (A1 تا C2)' }}", 
+        en: "{{ $settings['home_pillar2_desc_en'] ?? 'Curated articles categorized by international CEFR language levels (A1 to C2).' }}" 
+      },
+      pillar3Title: { 
+        fa: "{{ $settings['home_pillar3_title_fa'] ?? 'دسترسی آزاد و سریع' }}", 
+        en: "{{ $settings['home_pillar3_title_en'] ?? 'Direct Access' }}" 
+      },
+      pillar3Desc: { 
+        fa: "{{ $settings['home_pillar3_desc_fa'] ?? 'استفاده مستقیم از آزمون‌ها و بانک لغات بدون موانع و فرآیندهای طولانی' }}", 
+        en: "{{ $settings['home_pillar3_desc_en'] ?? 'Instant engagement with learning modules and tests with zero friction.' }}" 
+      },
       
-      // Articles
       articlesTitle: { fa: 'جدیدترین مقالات آموزشی', en: 'Latest Educational Articles' },
       articlesArchive: { fa: 'آرشیو مقالات', en: 'Article Archive' },
       articleRead: { fa: 'مطالعه کامل', en: 'Read Article' },
-      art1Title: { fa: 'تکنیک‌های تقویت مهارت شنیداری (Listening)', en: 'Essential Listening Mastery Techniques' },
-      art1Desc: { fa: 'روش‌های کلیدی برای افزایش درک شنیداری در آزمون‌های بین‌المللی و مکالمات روزمره...', en: 'Key methods to enhance listening comprehension for international exams and everyday speech...' },
       
-      // Quizzes
       quizzesTitle: { fa: 'بانک آزمون‌ها و کوئیزهای آنلاین', en: 'Online Quiz Bank' },
       quizzesSub: { fa: 'سطح دانش زبانی خود را با کوئیزهای استاندارد و پاسخ تشریحی محک بزنید', en: 'Evaluate your language proficiency with standard tests and in-depth answer keys' },
       quizzesArchive: { fa: 'آرشیو آزمون‌ها', en: 'Quiz Archive' },
       quizEnter: { fa: 'ورود به آزمون', en: 'Take Quiz' },
-      quiz1Title: { fa: 'کوئیز درک مطلب', en: 'Reading Comprehension' },
       
-      // About
-      teacherBadge: { fa: 'مؤلف و مدرس زبان', en: 'AUTHOR & INSTRUCTOR' },
+      teacherBadge: { 
+        fa: "{{ $settings['about_teacher_badge_fa'] ?? 'مؤلف و مدرس زبان' }}", 
+        en: "{{ $settings['about_teacher_badge_en'] ?? 'AUTHOR & INSTRUCTOR' }}" 
+      },
       teacherBtn: { fa: 'مشاهده سوابق و رزومه من', en: 'View Full Resume / CV' },
       
       toastSuccess: { fa: 'شماره شما برای اطلاع از مقالات و آزمون‌های جدید ثبت شد!', en: 'Thank you! You will be notified of new content.' },
