@@ -151,10 +151,15 @@
         <span x-show="lang === 'en'">{{ $article->title_en }}</span>
       </h1>
 
-      @if($article->excerpt_fa || $article->excerpt_en)
+      @php
+        $excerptFa = is_array($article->excerpt_fa) ? implode(' - ', array_filter($article->excerpt_fa)) : $article->excerpt_fa;
+        $excerptEn = is_array($article->excerpt_en) ? implode(' - ', array_filter($article->excerpt_en)) : $article->excerpt_en;
+      @endphp
+
+      @if($excerptFa || $excerptEn)
         <p class="text-brand-slate text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
-          <span x-show="lang === 'fa'">{{ $article->excerpt_fa }}</span>
-          <span x-show="lang === 'en'">{{ $article->excerpt_en }}</span>
+          <span x-show="lang === 'fa'">{{ $excerptFa }}</span>
+          <span x-show="lang === 'en'">{{ $excerptEn }}</span>
         </p>
       @endif
     </div>

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Article;
 use App\Models\Quiz;
 use App\Models\Subscriber;
+use App\Models\Setting;
 
 class DashboardController extends Controller
 {
@@ -16,6 +17,15 @@ class DashboardController extends Controller
         $subscribersCount = Subscriber::count();
         $recentArticles = Article::latest()->take(5)->get();
 
-        return view('admin.dashboard', compact('articlesCount', 'quizzesCount', 'subscribersCount', 'recentArticles'));
+        // بررسی وضعیت حالت Coming Soon از جدول settings
+        $isComingSoon = Setting::where('key', 'coming_soon_mode')->value('value') === '1';
+
+        return view('admin.dashboard', compact(
+            'articlesCount',
+            'quizzesCount',
+            'subscribersCount',
+            'recentArticles',
+            'isComingSoon'
+        ));
     }
 }
