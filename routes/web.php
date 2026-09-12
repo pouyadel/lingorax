@@ -26,3 +26,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
 });
 
 Route::post('/admin/editor/upload', [ArticleController::class, 'uploadEditorMedia'])->name('admin.editor.upload');
+
+Route::middleware(['web', 'auth.basic'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
+    Route::resource('articles', \App\Http\Controllers\Admin\ArticleController::class);
+    Route::post('/editor/upload', [\App\Http\Controllers\Admin\ArticleController::class, 'uploadEditorMedia'])->name('editor.upload');
+    // سایر روت‌های ادمین...
+});
