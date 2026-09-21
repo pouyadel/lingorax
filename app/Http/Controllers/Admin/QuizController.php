@@ -30,6 +30,8 @@ class QuizController extends Controller
             'category' => 'required|string',
             'description_fa' => 'nullable|string',
             'description_en' => 'nullable|string',
+            'is_private' => 'nullable|boolean',
+            'password' => 'nullable|string|max:100',
             'questions' => 'required|array|min:1',
             'questions.*.text_en' => 'required|string',
             'questions.*.text_fa' => 'nullable|string',
@@ -46,15 +48,21 @@ class QuizController extends Controller
 
         try {
             DB::transaction(function () use ($request) {
+                $isPrivate = $request->boolean('is_private');
+                $slug = Str::slug($request->title_en);
+                $slug = $slug ? $slug . '-' . time() : 'quiz-' . time();
+
                 $quiz = Quiz::create([
                     'title_fa' => $request->title_fa,
                     'title_en' => $request->title_en,
-                    'slug' => Str::slug($request->title_en) . '-' . time(),
+                    'slug' => $slug,
                     'description_fa' => $request->description_fa,
                     'description_en' => $request->description_en,
                     'level' => $request->level,
                     'category' => $request->category,
-                    'is_published' => $request->has('is_published'),
+                    'is_published' => $request->boolean('is_published'),
+                    'is_private' => $isPrivate,
+                    'password' => $isPrivate ? $request->input('password') : null,
                 ]);
 
                 foreach ($request->questions as $qIndex => $qData) {
@@ -77,7 +85,7 @@ class QuizController extends Controller
                 }
             });
 
-            return redirect()->route('admin.quizzes.index')->with('success', 'آزمون دوزبانه با موفقیت ثبت شد.');
+            return redirect()->route('admin.quizzes.index')->with('success', 'آزمون با موفقیت ثبت شد.');
 
         } catch (\Exception $e) {
             return back()->withInput()->with('error', 'خطا در دیتابیس: ' . $e->getMessage());
@@ -97,6 +105,10 @@ class QuizController extends Controller
             'title_en' => 'required|string|max:255',
             'level' => 'required|string',
             'category' => 'required|string',
+            'description_fa' => 'nullable|string',
+            'description_en' => 'nullable|string',
+            'is_private' => 'nullable|boolean',
+            'password' => 'nullable|string|max:100',
             'questions' => 'required|array|min:1',
             'questions.*.text_en' => 'required|string',
             'questions.*.options' => 'required|array|min:2',
@@ -106,15 +118,26 @@ class QuizController extends Controller
 
         try {
             DB::transaction(function () use ($request, $quiz) {
-                $quiz->update([
+                $isPrivate = $request->boolean('is_private');
+
+                $quizData = [
                     'title_fa' => $request->title_fa,
                     'title_en' => $request->title_en,
                     'description_fa' => $request->description_fa,
                     'description_en' => $request->description_en,
                     'level' => $request->level,
                     'category' => $request->category,
-                    'is_published' => $request->has('is_published'),
-                ]);
+                    'is_published' => $request->boolean('is_published'),
+                    'is_private' => $isPrivate,
+                    'password' => $isPrivate ? $request->input('password') : null,
+                ];
+
+                if (empty($quiz->slug)) {
+                    $slug = Str::slug($request->title_en);
+                    $quizData['slug'] = ($slug ? $slug : 'quiz') . '-' . time();
+                }
+
+                $quiz->update($quizData);
 
                 $quiz->questions()->delete();
 
@@ -138,7 +161,7 @@ class QuizController extends Controller
                 }
             });
 
-            return redirect()->route('admin.quizzes.index')->with('success', 'آزمون به‌روزرسانی شد.');
+            return redirect()->route('admin.quizzes.index')->with('success', 'آزمون با موفقیت به‌روزرسانی شد.');
 
         } catch (\Exception $e) {
             return back()->withInput()->with('error', 'خطا در ویرایش: ' . $e->getMessage());

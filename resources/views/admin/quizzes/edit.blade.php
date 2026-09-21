@@ -64,7 +64,32 @@
 
                 <div class="sm:col-span-2 flex items-center gap-2 pt-2">
                     <input type="checkbox" name="is_published" id="is_published" value="1" {{ $quiz->is_published ? 'checked' : '' }} class="rounded border-white/10 text-brand-gold focus:ring-brand-gold h-4 w-4 bg-brand-dark">
-                    <label for="is_published" class="text-xs font-bold text-white cursor-pointer select-none">انتشار این آزمون در وب‌سایت</label>
+                    <label for="is_published" class="text-xs font-bold text-white cursor-pointer select-none">انتشار فعال آزمون</label>
+                </div>
+
+                <!-- ویرایش وضعیت اختصاصی بودن و رمز عبور -->
+                <div class="sm:col-span-2 space-y-3 pt-3 border-t border-white/5" x-data="{ isPrivate: {{ old('is_private', $quiz->is_private) ? 'true' : 'false' }} }">
+                    <div class="flex items-center gap-2">
+                        <input type="checkbox" name="is_private" id="is_private" value="1" x-model="isPrivate" class="rounded border-white/10 text-brand-gold focus:ring-brand-gold h-4 w-4 bg-brand-dark">
+                        <label for="is_private" class="text-xs font-bold text-brand-gold cursor-pointer select-none">
+                            این آزمون خصوصی (Private) است و ورود به آن نیازمند رمز عبور است
+                        </label>
+                    </div>
+
+                    <div x-show="isPrivate" x-transition class="space-y-1.5 max-w-sm bg-brand-dark/50 p-4 rounded-2xl border border-brand-gold/30">
+                        <label class="text-xs text-brand-slate font-bold block">رمز ورود به آزمون (Password)</label>
+                        <input 
+                            type="text" 
+                            name="password" 
+                            value="{{ old('password', $quiz->password) }}" 
+                            :required="isPrivate" 
+                            class="w-full bg-brand-dark border border-brand-gold/40 rounded-xl px-3.5 py-2.5 text-xs text-brand-gold font-mono tracking-wider focus:outline-none focus:border-brand-gold" 
+                            placeholder="رمز ورود را وارد کنید..." 
+                        />
+                        <p class="text-[10px] text-brand-slate leading-relaxed">
+                            این آزمون در آرشیو عمومی سایت مخفی خواهد ماند و تنها با ارسال لینک و این رمز قابل دسترس خواهد بود.
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>

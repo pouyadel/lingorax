@@ -49,16 +49,42 @@ class FrontendController extends Controller
         return view('article-show', compact('article'));
     }
 
+    // ۱. لیست آزمون‌های عمومی (آزمون‌های اختصاصی اینجا نمایش داده نمی‌شوند)
     public function quizzes()
     {
         $quizzes = Quiz::where('is_published', true)
-            ->with(['questions.options'])
+            ->where('is_private', false)
+            ->withCount('questions')
             ->latest()
             ->get();
 
         return view('quizzes', compact('quizzes'));
     }
+    // ۲. مشاهده آزمون با لینک مستقیم
+    public function showQuiz(Quiz $quiz)
+    {
+        // اگر آزمون اختصاصی است و کاربر هنوز رمز صحیح را وارد نکرده، صفحه قفل نمایش داده می‌شود
+        if ($quiz->is_private && !session()->has('quiz_unlocked_' . $quiz->id)) {
+            return view('quizzes.locked', compact('quiz'));
+        }
 
+        $quiz->load(['questions.options']);
+        return view('quizzes.show', compact('quiz'));
+    }
+    // ۳. بررسی رمز وارد شده توسط کاربر
+    public function unlockQuiz(Request $request, Quiz $quiz)
+    {
+        $request->validate([
+            'password' => 'required|string',
+        ]);
+
+        if ($request->password === $quiz->password) {
+            session()->put('quiz_unlocked_' . $quiz->id, true);
+            return redirect()->route('quizzes.show', $quiz)->with('success', 'رمز عبور با موفقیت تأیید شد.');
+        }
+
+        return back()->withErrors(['password' => 'رمز عبور وارد شده صحیح نمی‌باشد.']);
+    }
     public function about()
     {
         $settings = Setting::all()->pluck('value', 'key');

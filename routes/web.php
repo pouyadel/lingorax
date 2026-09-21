@@ -76,3 +76,7 @@ Route::get('/robots.txt', function () {
 
     return response($content, 200)->header('Content-Type', 'text/plain');
 });
+// روت‌های فرانت‌اند برای آزمون‌ها
+Route::get('/quizzes', [FrontendController::class, 'quizzes'])->name('quizzes');
+Route::get('/quizzes/{quiz}', [FrontendController::class, 'showQuiz'])->name('quizzes.show');
+Route::post('/quizzes/{quiz}/unlock', [FrontendController::class, 'unlockQuiz'])->name('quizzes.unlock');
