@@ -1,10 +1,86 @@
 @extends('layouts.app')
 
-@section('title', ($article->title_fa ?? '') . ' | ' . ($article->title_en ?? ''))
+@php
+    $mainTitle = $article->title_fa ?: $article->title_en;
+    $pageTitle = $mainTitle . ' | آموزش زبان انگلیسی لینگوراکس - یاشیل رزمیان زاده';
+    $rawExcerpt = is_array($article->excerpt_fa) ? implode(' ', array_filter($article->excerpt_fa)) : $article->excerpt_fa;
+    $metaDescription = $rawExcerpt ?: (mb_substr(strip_tags($article->content_fa ?: $article->content_en), 0, 155) . '...');
+    $articleImage = $article->image ? asset('storage/' . $article->image) : asset('images/logo.png');
+
+    $articleSchema = [
+      "@context" => "https://schema.org",
+      "@graph" => [
+        [
+          "@type" => "BreadcrumbList",
+          "itemListElement" => [
+            [
+              "@type" => "ListItem",
+              "position" => 1,
+              "name" => "صفحه اصلی لینگوراکس",
+              "item" => route('home')
+            ],
+            [
+              "@type" => "ListItem",
+              "position" => 2,
+              "name" => "بانک مقالات آموزشی",
+              "item" => route('articles')
+            ],
+            [
+              "@type" => "ListItem",
+              "position" => 3,
+              "name" => $mainTitle,
+              "item" => route('articles.show', $article->slug)
+            ]
+          ]
+        ],
+        [
+          "@type" => "BlogPosting",
+          "mainEntityOfPage" => [
+            "@type" => "WebPage",
+            "@id" => route('articles.show', $article->slug)
+          ],
+          "headline" => $mainTitle,
+          "alternativeHeadline" => $article->title_en,
+          "description" => $metaDescription,
+          "image" => $articleImage,
+          "inLanguage" => "fa-IR",
+          "articleSection" => ucfirst($article->category),
+          "keywords" => "یاشیل رزمیان زاده, لینگوراکس, LINGORAX, {$article->category}, آموزش زبان انگلیسی",
+          "author" => [
+            "@type" => "Person",
+            "name" => "یاشیل رزمیان زاده",
+            "url" => route('about')
+          ],
+          "publisher" => [
+            "@type" => "Organization",
+            "name" => "لینگوراکس | LINGORAX",
+            "logo" => [
+              "@type" => "ImageObject",
+              "url" => asset('images/logo.png')
+            ]
+          ],
+          "datePublished" => $article->created_at ? $article->created_at->toIso8601String() : now()->toIso8601String(),
+          "dateModified" => $article->updated_at ? $article->updated_at->toIso8601String() : now()->toIso8601String()
+        ]
+      ]
+    ];
+@endphp
+
+@section('title', $pageTitle)
+@section('meta_description', $metaDescription)
+@section('meta_keywords', ($article->title_fa ? $article->title_fa . ', ' : '') . 'یاشیل رزمیان زاده, لینگوراکس, LINGORAX, آموزش زبان انگلیسی, ' . $article->category . ', سطح ' . $article->level)
+@section('canonical', route('articles.show', $article->slug))
+@section('og_type', 'article')
+@section('og_image', $articleImage)
+
+@push('schema')
+<script type="application/ld+json">
+{!! json_encode($articleSchema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}
+</script>
+@endpush
 
 @push('styles')
 <style>
-    /* استایل اختصاصی برای محتوای رندر شده مقالات */
     .article-body h2 {
         color: #ffffff;
         font-size: 1.5rem;
@@ -60,7 +136,6 @@
         max-width: 100%;
         height: auto;
     }
-    /* ویدیوهای ریسپانسیو Embed آپارات، یوتیوب و غیره */
     .article-body iframe {
         width: 100% !important;
         aspect-ratio: 16 / 9;
@@ -101,23 +176,23 @@
 @endpush
 
 @section('content')
-<div x-data="articleShow()" class="space-y-10 py-6 sm:py-10">
+<div x-data="articleShow()" class="space-y-8 sm:space-y-10 py-6 sm:py-10">
 
-  <!-- نوار چسبان پیشرفت مطالعه مقاله -->
+  <!-- نوار پیشرفت مطالعه مقاله -->
   <div class="fixed top-0 inset-x-0 h-1 bg-brand-darkest/50 z-50">
     <div class="bg-gradient-to-r from-brand-gold to-brand-goldLight h-full transition-all duration-150" :style="'width: ' + progress + '%'"></div>
   </div>
 
-  <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+  <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-8">
     
     <!-- مسیر راهنما (Breadcrumbs) -->
-    <nav class="flex items-center gap-2 text-xs font-semibold text-brand-slate/70">
+    <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-xs font-semibold text-brand-slate/70">
       <a href="{{ route('home') }}" class="hover:text-brand-gold transition-colors">
         <span x-show="lang === 'fa'">خانه</span><span x-show="lang === 'en'">Home</span>
       </a>
       <span>/</span>
       <a href="{{ route('articles') }}" class="hover:text-brand-gold transition-colors">
-        <span x-show="lang === 'fa'">مقالات آموزشی</span><span x-show="lang === 'en'">Articles</span>
+        <span x-show="lang === 'fa'">مقالات آموزشی لینگوراکس</span><span x-show="lang === 'en'">Articles</span>
       </a>
       <span>/</span>
       <span class="text-brand-gold truncate max-w-xs">
@@ -126,7 +201,7 @@
       </span>
     </nav>
 
-    <!-- سرتیتر و فراداده مقاله -->
+    <!-- سرتیتر و جزئیات مقاله -->
     <div class="space-y-4 text-center">
       <div class="inline-flex items-center gap-2.5 flex-wrap justify-center text-xs font-bold">
         <span class="bg-brand-gold text-brand-darkest px-3 py-1 rounded-lg shadow">
@@ -157,27 +232,27 @@
       @endphp
 
       @if($excerptFa || $excerptEn)
-        <p class="text-brand-slate text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+        <p class="text-brand-slate text-xs sm:text-base max-w-2xl mx-auto leading-relaxed">
           <span x-show="lang === 'fa'">{{ $excerptFa }}</span>
           <span x-show="lang === 'en'">{{ $excerptEn }}</span>
         </p>
       @endif
     </div>
 
-    <!-- تصویر شاخص با جلوه شیشه‌ای و نور طلایی -->
+    <!-- تصویر شاخص -->
     @if($article->image)
       <div class="relative rounded-3xl overflow-hidden glass-card border border-white/10 shadow-2xl group">
         <img 
           src="{{ asset('storage/' . $article->image) }}" 
-          alt="{{ $article->title_en }}" 
-          class="w-full h-64 sm:h-[420px] object-cover object-center group-hover:scale-105 transition-transform duration-700" 
+          alt="{{ ($article->title_fa ?: $article->title_en) . ' - آموزش زبان انگلیسی لینگوراکس با یاشیل رزمیان زاده' }}" 
+          class="w-full h-60 sm:h-[420px] object-cover object-center group-hover:scale-105 transition-transform duration-700" 
         />
         <div class="absolute inset-0 bg-gradient-to-t from-brand-darkest/80 via-transparent to-transparent"></div>
       </div>
     @endif
 
-    <!-- کادر اصلی متن مقاله -->
-    <div class="glass-card p-6 sm:p-12 rounded-3xl border border-white/5 shadow-2xl relative">
+    <!-- محتوای اصلی مقاله -->
+    <div class="glass-card p-5 sm:p-12 rounded-3xl border border-white/5 shadow-2xl relative">
       <div 
         class="article-body font-normal" 
         :dir="lang === 'fa' ? 'rtl' : 'ltr'"
@@ -190,47 +265,47 @@
         </div>
       </div>
 
-      <!-- دکمه‌های اشتراک‌گذاری و تعامل -->
+      <!-- اشتراک‌گذاری -->
       <div class="border-t border-white/10 pt-6 mt-10 flex flex-wrap items-center justify-between gap-4">
         <div class="flex items-center gap-2">
           <span class="text-xs font-bold text-brand-slate">
-            <span x-show="lang === 'fa'">اشتراک‌گذاری:</span>
+            <span x-show="lang === 'fa'">اشتراک‌گذاری مقاله:</span>
             <span x-show="lang === 'en'">Share:</span>
           </span>
-          <button @click="copyShareLink()" class="glass-card hover:border-brand-gold text-brand-slate hover:text-white p-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5" title="کپی لینک">
+          <button @click="copyShareLink()" class="glass-card hover:border-brand-gold text-brand-slate hover:text-white p-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5">
             <svg class="w-4 h-4 text-brand-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
             <span x-text="copied ? (lang === 'fa' ? 'کپی شد!' : 'Copied!') : (lang === 'fa' ? 'کپی لینک' : 'Copy')"></span>
           </button>
         </div>
 
         <a href="{{ route('articles') }}" class="inline-flex items-center gap-2 border border-brand-gold/40 text-brand-gold hover:bg-brand-gold hover:text-brand-darkest px-4 py-2 rounded-xl text-xs font-bold transition-all">
-          <span x-show="lang === 'fa'">← بازگشت به آرشیو مقالات</span>
-          <span x-show="lang === 'en'">← Back to Articles</span>
+          <span x-show="lang === 'fa'">← مشاهده همه مقالات لینگوراکس</span>
+          <span x-show="lang === 'en'">← All Articles</span>
         </a>
       </div>
     </div>
 
-    <!-- کارت نویسنده در انتهای مقاله -->
-    <div class="glass-card p-6 sm:p-8 rounded-3xl border border-brand-gold/20 flex flex-col sm:flex-row items-center gap-6 text-center sm:text-right">
+    <!-- جعبه بیوگرافی نویسنده با سئوی اختصاصی نام یاشیل رزمیان زاده و برند لینگوراکس -->
+    <div class="glass-card p-5 sm:p-8 rounded-3xl border border-brand-gold/25 flex flex-col sm:flex-row items-center gap-5 sm:gap-6 text-center sm:text-right">
       <div class="w-20 h-20 rounded-2xl overflow-hidden border-2 border-brand-gold/50 flex-shrink-0 shadow-glow-gold">
-        <img src="{{ asset('images/image.png') }}" class="w-full h-full object-cover" alt="Author">
+        <img src="{{ asset('images/image.png') }}" class="w-full h-full object-cover" alt="یاشیل رزمیان زاده | مدرس ارشد آیلتس و زبان انگلیسی">
       </div>
       <div class="space-y-1.5 flex-1">
         <h4 class="text-base font-bold text-white font-heading">
-          <span x-show="lang === 'fa'">{{ $settings['about_teacher_name_fa'] ?? 'یاشیل رزمیان‌زاده' }}</span>
+          <span x-show="lang === 'fa'">{{ $settings['about_teacher_name_fa'] ?? 'یاشیل رزمیان زاده' }}</span>
           <span x-show="lang === 'en'">{{ $settings['about_teacher_name_en'] ?? 'Yashil Razmiyanzadeh' }}</span>
         </h4>
         <p class="text-xs text-brand-gold font-semibold">
-          <span x-show="lang === 'fa'">{{ $settings['about_teacher_role_fa'] ?? 'مدرس تخصصی آیلتس، تافل و زبان عمومی' }}</span>
+          <span x-show="lang === 'fa'">{{ $settings['about_teacher_role_fa'] ?? 'مدرس تخصصی آیلتس، تافل و زبان انگلیسی' }}</span>
           <span x-show="lang === 'en'">{{ $settings['about_teacher_role_en'] ?? 'Specialized IELTS, TOEFL & General English Instructor' }}</span>
         </p>
         <p class="text-xs text-brand-slate leading-relaxed">
-          <span x-show="lang === 'fa'">پلتفرم تخصصی آموزش و ارزیابی زبان انگلیسی LINGORAX. مرجع مقالات تحلیلی و کوئیزهای موضوعی.</span>
-          <span x-show="lang === 'en'">LINGORAX specialized platform for English learning and assessment.</span>
+          <span x-show="lang === 'fa'">مؤلف و مدرس در پایگاه تخصصی لینگوراکس (LINGORAX). ارائه جدیدترین تحلیل‌ها، متدهای نوین واژگان و آماده‌سازی برای آزمون‌های بین‌المللی با هدایت یاشیل رزمیان زاده.</span>
+          <span x-show="lang === 'en'">Published on LINGORAX English platform by Yashil Razmiyanzadeh.</span>
         </p>
       </div>
       <a href="{{ route('about') }}" class="whitespace-nowrap bg-brand-cardLight border border-white/10 hover:border-brand-gold text-white text-xs font-bold px-4 py-2.5 rounded-xl transition-all">
-        <span x-show="lang === 'fa'">مشاهده بیوگرافی</span>
+        <span x-show="lang === 'fa'">درباره یاشیل رزمیان زاده</span>
         <span x-show="lang === 'en'">View Profile</span>
       </a>
     </div>

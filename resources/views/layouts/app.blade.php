@@ -3,9 +3,33 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>@yield('title', 'LINGORAX | English Hub & Online Assessment')</title>
+    <title>@yield('title', 'لینگوراکس (LINGORAX) | آموزش و ارزیابی تخصصی زبان انگلیسی - یاشیل رزمیان زاده')</title>
 
+    <!-- متاتگ‌های عمومی و تخصصی سئو -->
+    <meta name="description" content="@yield('meta_description', 'پایگاه آموزشی لینگوراکس (LINGORAX) با مدیریت یاشیل رزمیان زاده؛ مرجع تخصصی مقالات تحلیلی، ارزیابی آنلاین، کوئیزهای سطح‌بندی شده و استراتژی‌های جامع آیلتس و تافل.')" />
+    <meta name="keywords" content="@yield('meta_keywords', 'یاشیل رزمیان زاده, یاشیل رزمیان‌زاده, لینگوراکس, LINGORAX, Yashil Razmiyanzadeh, آموزش زبان انگلیسی, کوئیز آنلاین زبان, آزمون تعیین سطح, آیلتس, تافل, گرامر زبان انگلیسی')" />
+    <meta name="author" content="یاشیل رزمیان زاده | Yashil Razmiyanzadeh" />
+    <meta name="robots" content="@yield('meta_robots', 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1')" />
+    <link rel="canonical" href="@yield('canonical', url()->current())" />
+
+    <!-- Open Graph (نمایش پیش‌نمایش در تلگرام، واتساپ، ایتا و فیسبوک) -->
+    <meta property="og:type" content="@yield('og_type', 'website')" />
+    <meta property="og:locale" content="fa_IR" />
+    <meta property="og:site_name" content="لینگوراکس | LINGORAX" />
+    <meta property="og:url" content="@yield('canonical', url()->current())" />
+    <meta property="og:title" content="@yield('title', 'لینگوراکس (LINGORAX) | آموزش زبان انگلیسی با یاشیل رزمیان زاده')" />
+    <meta property="og:description" content="@yield('meta_description', 'پایگاه آموزشی لینگوراکس (LINGORAX) با تدریس یاشیل رزمیان زاده؛ مرجع مقالات تحلیلی و آزمون‌های آنلاین زبان انگلیسی.')" />
+    <meta property="og:image" content="@yield('og_image', asset('images/logo.png'))" />
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="@yield('title', 'لینگوراکس | یاشیل رزمیان زاده')" />
+    <meta name="twitter:description" content="@yield('meta_description', 'پایگاه تخصصی آموزش زبان انگلیسی LINGORAX به مدیریت یاشیل رزمیان زاده.')" />
+    <meta name="twitter:image" content="@yield('og_image', asset('images/logo.png'))" />
+
+    <!-- Favicon -->
     <link rel="icon" type="image/png" href="{{ asset('images/favicon.png') }}" />
+    <link rel="apple-touch-icon" href="{{ asset('images/favicon.png') }}" />
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
 
     <!-- اعمال آنی جهت صفحه بدون پرش ظاهری -->
@@ -20,6 +44,58 @@
     <!-- Tailwind & Alpine -->
     <script src="{{ asset('js/tailwindcss.js') }}"></script>
     <script defer src="{{ asset('js/alpine.min.js') }}"></script>
+
+    <!-- اسکیما گراف گوگل برای برند لینگوراکس و هویت یاشیل رزمیان زاده (کاملاً امن در برابر خطای Blade) -->
+    @php
+      $schemaData = [
+        "@context" => "https://schema.org",
+        "@graph" => [
+          [
+            "@type" => "WebSite",
+            "@id" => url('/') . "/#website",
+            "url" => url('/'),
+            "name" => "لینگوراکس | LINGORAX",
+            "description" => "پایگاه تخصصی آموزش، مقالات تحلیلی و کوئیزهای آنلاین زبان انگلیسی",
+            "publisher" => [
+              "@id" => url('/') . "/#person"
+            ],
+            "inLanguage" => ["fa-IR", "en-US"]
+          ],
+          [
+            "@type" => "EducationalOrganization",
+            "@id" => url('/') . "/#organization",
+            "name" => "لینگوراکس",
+            "alternateName" => ["LINGORAX", "پایگاه آموزشی لینگوراکس"],
+            "url" => url('/'),
+            "logo" => asset('images/logo.png'),
+            "founder" => [
+              "@id" => url('/') . "/#person"
+            ],
+            "description" => "مرجع آموزش تخصصی، کوئیزهای هوشمند و مقالات آمادگی آزمون‌های بین‌المللی زبان انگلیسی"
+          ],
+          [
+            "@type" => "Person",
+            "@id" => url('/') . "/#person",
+            "name" => "یاشیل رزمیان زاده",
+            "alternateName" => ["یاشیل رزمیان‌زاده", "Yashil Razmiyanzadeh"],
+            "jobTitle" => "مدرس و مؤلف تخصصی آزمون‌های بین‌المللی زبان انگلیسی، آیلتس و تافل",
+            "url" => route('about'),
+            "image" => asset('images/image.png'),
+            "worksFor" => [
+              "@id" => url('/') . "/#organization"
+            ],
+            "sameAs" => [
+              "https://instagram.com/Lingorax"
+            ]
+          ]
+        ]
+      ];
+    @endphp
+    <script type="application/ld+json">
+    {!! json_encode($schemaData, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}
+    </script>
+
+    @stack('schema')
 
     <script>
       tailwind.config = {

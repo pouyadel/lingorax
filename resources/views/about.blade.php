@@ -55,7 +55,7 @@
   </section>
 
   <!-- STATISTICS -->
-  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <!-- <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6">
       <template x-for="stat in stats" :key="stat.id">
         <div class="glass-card p-4 sm:p-6 rounded-2xl sm:rounded-3xl text-center space-y-1.5 border border-white/5 hover:border-brand-gold/30 transition-colors">
@@ -64,7 +64,7 @@
         </div>
       </template>
     </div>
-  </section>
+  </section> -->
 
   <!-- PHILOSOPHY / METHODOLOGY -->
   <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
