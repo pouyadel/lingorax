@@ -43,20 +43,22 @@
             <div class="space-y-1.5">
                 <label class="text-xs text-brand-slate font-bold">دسته‌بندی</label>
                 <select name="category" class="w-full bg-brand-dark border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-brand-gold">
-                    <option value="listening">شنیداری</option>
-                    <option value="grammar">گرامر</option>
-                    <option value="vocab">واژگان</option>
-                    <option value="reading">درک مطلب</option>
-                    <option value="ielts">آیلتس و تافل</option>
+                    <option value="speaking" {{ old('category') === 'speaking' ? 'selected' : '' }}>اسپیکینگ (Speaking)</option>
+                    <option value="listening" {{ old('category') === 'listening' ? 'selected' : '' }}>شنیداری (Listening)</option>
+                    <option value="grammar" {{ old('category') === 'grammar' ? 'selected' : '' }}>گرامر (Grammar)</option>
+                    <option value="vocab" {{ old('category') === 'vocab' ? 'selected' : '' }}>واژگان (Vocabulary)</option>
+                    <option value="reading" {{ old('category') === 'reading' ? 'selected' : '' }}>درک مطلب (Reading)</option>
+                    <option value="ielts" {{ old('category') === 'ielts' ? 'selected' : '' }}>آیلتس و تافل (IELTS & TOEFL)</option>
                 </select>
             </div>
 
             <div class="space-y-1.5">
                 <label class="text-xs text-brand-slate font-bold">سطح زبان</label>
                 <select name="level" class="w-full bg-brand-dark border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-brand-gold">
-                    <option value="A1 - A2">A1 - A2</option>
-                    <option value="B1 - B2">B1 - B2</option>
-                    <option value="C1 - C2">C1 - C2</option>
+                    <option value="A1 - A2" {{ old('level') === 'A1 - A2' ? 'selected' : '' }}>A1 - A2</option>
+                    <option value="B1 - B2" {{ old('level') === 'B1 - B2' ? 'selected' : '' }}>B1 - B2</option>
+                    <option value="C1 - C2" {{ old('level') === 'C1 - C2' ? 'selected' : '' }}>C1 - C2</option>
+                    <option value="A1 - C2" {{ old('level') === 'A1 - C2' ? 'selected' : '' }}>A1 - C2 (مناسب تمامی سطوح)</option>
                 </select>
             </div>
 

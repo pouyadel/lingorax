@@ -4,6 +4,7 @@
 
 @php
   $catNames = [
+    'speaking'  => ['fa' => 'اسپیکینگ', 'en' => 'Speaking'],
     'listening' => ['fa' => 'شنیداری', 'en' => 'Listening'],
     'grammar'   => ['fa' => 'گرامر', 'en' => 'Grammar'],
     'vocab'     => ['fa' => 'واژگان', 'en' => 'Vocabulary'],
@@ -100,6 +101,12 @@
             x-text="t.catAll[lang]"
           ></button>
           <button
+            @click="selectedCategory = 'speaking'; currentPage = 1"
+            :class="selectedCategory === 'speaking' ? 'bg-brand-gold text-brand-darkest font-bold shadow-glow-gold' : 'glass-card text-brand-slate hover:text-white border-white/5'"
+            class="px-3 py-1.5 rounded-xl transition-all"
+            x-text="t.catSpeaking[lang]"
+          ></button>
+          <button
             @click="selectedCategory = 'listening'; currentPage = 1"
             :class="selectedCategory === 'listening' ? 'bg-brand-gold text-brand-darkest font-bold shadow-glow-gold' : 'glass-card text-brand-slate hover:text-white border-white/5'"
             class="px-3 py-1.5 rounded-xl transition-all"
@@ -140,22 +147,26 @@
             x-text="t.filterAll[lang]"
           ></button>
           <button
-            @click="selectedLevel = 'A1'; currentPage = 1"
-            :class="selectedLevel === 'A1' ? 'border-brand-gold text-brand-gold bg-brand-gold/10' : 'border-white/10 text-brand-slate/80 hover:text-white'"
+            @click="selectedLevel = 'A1 - A2'; currentPage = 1"
+            :class="selectedLevel === 'A1 - A2' ? 'border-brand-gold text-brand-gold bg-brand-gold/10' : 'border-white/10 text-brand-slate/80 hover:text-white'"
             class="px-2.5 py-0.5 rounded-lg border transition-all"
           >A1 - A2</button>
           <button
-            @click="selectedLevel = 'B1'; currentPage = 1"
-            :class="selectedLevel === 'B1' ? 'border-brand-gold text-brand-gold bg-brand-gold/10' : 'border-white/10 text-brand-slate/80 hover:text-white'"
+            @click="selectedLevel = 'B1 - B2'; currentPage = 1"
+            :class="selectedLevel === 'B1 - B2' ? 'border-brand-gold text-brand-gold bg-brand-gold/10' : 'border-white/10 text-brand-slate/80 hover:text-white'"
             class="px-2.5 py-0.5 rounded-lg border transition-all"
           >B1 - B2</button>
           <button
-            @click="selectedLevel = 'C1'; currentPage = 1"
-            :class="selectedLevel === 'C1' ? 'border-brand-gold text-brand-gold bg-brand-gold/10' : 'border-white/10 text-brand-slate/80 hover:text-white'"
+            @click="selectedLevel = 'C1 - C2'; currentPage = 1"
+            :class="selectedLevel === 'C1 - C2' ? 'border-brand-gold text-brand-gold bg-brand-gold/10' : 'border-white/10 text-brand-slate/80 hover:text-white'"
             class="px-2.5 py-0.5 rounded-lg border transition-all"
           >C1 - C2</button>
+          <button
+            @click="selectedLevel = 'A1 - C2'; currentPage = 1"
+            :class="selectedLevel === 'A1 - C2' ? 'border-brand-gold text-brand-gold bg-brand-gold/10' : 'border-white/10 text-brand-slate/80 hover:text-white'"
+            class="px-2.5 py-0.5 rounded-lg border transition-all"
+          >A1 - C2</button>
         </div>
-      </div>
 
     </div>
   </section>
@@ -305,7 +316,9 @@ function articlesArchive() {
     
     get filteredArticles() {
       return this.articles.filter(item => {
-        const matchLevel = this.selectedLevel === 'all' || item.level.includes(this.selectedLevel);
+        const matchLevel = this.selectedLevel === 'all' 
+          || item.level === this.selectedLevel 
+          || item.level === 'A1 - C2';
         const matchCategory = this.selectedCategory === 'all' || item.category === this.selectedCategory;
         const query = this.searchQuery.toLowerCase().trim();
         const titleFa = (item.title?.fa || '').toLowerCase();
@@ -349,6 +362,7 @@ function articlesArchive() {
       searchPlaceholder: { fa: 'جستجو در عنوان یا متن مقاله...', en: 'Search articles by title or keyword...' },
       filterAll: { fa: 'همه سطوح', en: 'All Levels' },
       catAll: { fa: 'همه موضوعات', en: 'All Topics' },
+      catSpeaking: { fa: 'اسپیکینگ', en: 'Speaking' },
       catListening: { fa: 'شنیداری', en: 'Listening' },
       catGrammar: { fa: 'گرامر', en: 'Grammar' },
       catVocab: { fa: 'واژگان', en: 'Vocabulary' },

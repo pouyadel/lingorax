@@ -108,10 +108,10 @@
           x-text="t.catVocab[lang]"
         ></button>
         <button
-          @click="selectedCategory = 'listening'; currentPage = 1"
-          :class="selectedCategory === 'listening' ? 'bg-brand-gold text-brand-darkest font-bold shadow-glow-gold' : 'glass-card text-brand-slate hover:text-white border-white/5'"
+          @click="selectedCategory = 'reading'; currentPage = 1"
+          :class="selectedCategory === 'reading' ? 'bg-brand-gold text-brand-darkest font-bold shadow-glow-gold' : 'glass-card text-brand-slate hover:text-white border-white/5'"
           class="px-3 py-1.5 rounded-xl transition-all"
-          x-text="t.catListening[lang]"
+          x-text="lang === 'fa' ? 'درک مطلب' : 'Reading'"
         ></button>
       </div>
     </div>

@@ -44,20 +44,22 @@
             <div class="space-y-1.5">
                 <label class="text-xs text-brand-slate font-bold">دسته‌بندی (مهارت)</label>
                 <select name="category" class="w-full bg-brand-dark border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-brand-gold">
-                    <option value="listening" {{ $article->category === 'listening' ? 'selected' : '' }}>شنیداری (Listening)</option>
-                    <option value="grammar" {{ $article->category === 'grammar' ? 'selected' : '' }}>گرامر (Grammar)</option>
-                    <option value="vocab" {{ $article->category === 'vocab' ? 'selected' : '' }}>واژگان (Vocabulary)</option>
-                    <option value="reading" {{ $article->category === 'reading' ? 'selected' : '' }}>درک مطلب (Reading)</option>
-                    <option value="ielts" {{ $article->category === 'ielts' ? 'selected' : '' }}>آیلتس و تافل (IELTS & TOEFL)</option>
+                    <option value="speaking" {{ old('category', $article->category) === 'speaking' ? 'selected' : '' }}>اسپیکینگ (Speaking)</option>
+                    <option value="listening" {{ old('category', $article->category) === 'listening' ? 'selected' : '' }}>شنیداری (Listening)</option>
+                    <option value="grammar" {{ old('category', $article->category) === 'grammar' ? 'selected' : '' }}>گرامر (Grammar)</option>
+                    <option value="vocab" {{ old('category', $article->category) === 'vocab' ? 'selected' : '' }}>واژگان (Vocabulary)</option>
+                    <option value="reading" {{ old('category', $article->category) === 'reading' ? 'selected' : '' }}>درک مطلب (Reading)</option>
+                    <option value="ielts" {{ old('category', $article->category) === 'ielts' ? 'selected' : '' }}>آیلتس و تافل (IELTS & TOEFL)</option>
                 </select>
             </div>
 
             <div class="space-y-1.5">
                 <label class="text-xs text-brand-slate font-bold">سطح زبان</label>
                 <select name="level" class="w-full bg-brand-dark border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-brand-gold">
-                    <option value="A1 - A2" {{ $article->level === 'A1 - A2' ? 'selected' : '' }}>A1 - A2</option>
-                    <option value="B1 - B2" {{ $article->level === 'B1 - B2' ? 'selected' : '' }}>B1 - B2</option>
-                    <option value="C1 - C2" {{ $article->level === 'C1 - C2' ? 'selected' : '' }}>C1 - C2</option>
+                    <option value="A1 - A2" {{ old('level', $article->level) === 'A1 - A2' ? 'selected' : '' }}>A1 - A2</option>
+                    <option value="B1 - B2" {{ old('level', $article->level) === 'B1 - B2' ? 'selected' : '' }}>B1 - B2</option>
+                    <option value="C1 - C2" {{ old('level', $article->level) === 'C1 - C2' ? 'selected' : '' }}>C1 - C2</option>
+                    <option value="A1 - C2" {{ old('level', $article->level) === 'A1 - C2' ? 'selected' : '' }}>A1 - C2 (مناسب تمامی سطوح)</option>
                 </select>
             </div>
 
